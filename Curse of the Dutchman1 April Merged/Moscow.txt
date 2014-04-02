@@ -1,0 +1,19 @@
+Must: 
+beweegbaar schip
+zeekaart
+shooting
+enemies
+schedel van het beest
+cutscene
+
+Should:
+inventory
+routedrawing op kaart
+GUI health
+begin scherm
+gameoverscherm
+menu
+
+could:
+havens/land
+controle over bamanning
