@@ -11,7 +11,30 @@ public class EnemyHealth : MonoBehaviour {
 	private bool _drop = false;
 	// Use this for initialization
 	void Start () {
-		enemyHealth = PlayerPrefs.GetFloat("enemy1Health");//enemyname?
+		if(gameObject.tag == "enemy1")
+		{
+			enemyHealth = PlayerPrefs.GetFloat("enemy1Health");
+		}
+		if(gameObject.tag == "enemy2")
+		{
+			enemyHealth = PlayerPrefs.GetFloat("enemy2Health");
+		}
+		if(gameObject.tag == "enemy3")
+		{
+			enemyHealth = PlayerPrefs.GetFloat("enemy3Health");
+		}
+		if(gameObject.tag == "enemy4")
+		{
+			enemyHealth = PlayerPrefs.GetFloat("enemy4Health");
+		}
+		if(gameObject.tag == "enemy5")
+		{
+			enemyHealth = PlayerPrefs.GetFloat("enemy5Health");
+		}
+		if(gameObject.tag == "enemy6")
+		{
+			enemyHealth = PlayerPrefs.GetFloat("enemy6Health");
+		}
 		if (enemyHealth <= 0)
 		{
 			Destroy(this.gameObject);
@@ -28,7 +51,6 @@ public class EnemyHealth : MonoBehaviour {
 		{
 			transform.Translate(Vector3.down* sinkSpeed * Time.deltaTime);
 			if(Drop.transform.position != transform.position && _drop == false){
-				Debug.Log("drop");
 				_drop = true;
 				Drop.transform.position = new Vector3(transform.position.x,transform.position.y +1, transform.position.z);
 			}

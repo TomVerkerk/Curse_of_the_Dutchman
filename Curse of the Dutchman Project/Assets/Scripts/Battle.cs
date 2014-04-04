@@ -20,15 +20,6 @@ public class Battle : MonoBehaviour {
 	private Vector3 cameraPos;
 	public bool battle = false;
 
-	// Use this for initialization
-	void Start () {
-		if(PlayerPrefs.GetString("level") == "Level2")
-		{
-			enemy = GameObject.FindWithTag("enemyShip1");
-		}
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		if(battle == false)
 		{

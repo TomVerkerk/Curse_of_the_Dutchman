@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 136: {fileID: 13600000}
+  - 136: {fileID: 13600002}
   - 114: {fileID: 11400000}
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400006}
@@ -954,7 +954,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.4657211, y: 63.4938202, z: 75.7700272}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -965,7 +965,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.4657211, y: 42.9367142, z: 75.7700272}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -1847,7 +1847,7 @@ MonoBehaviour:
   rotateSpeed: 20
   minRotation: .0799999982
   fadeSpeed: .400000006
-  supplyDropTime: 2000
+  supplyDropTime: 1800
   minSwipePer: 30
   mainCam: {fileID: 100004}
   fader: {fileID: 0}
@@ -1933,6 +1933,7 @@ MonoBehaviour:
   right: 1
   battle: 0
   canonSound: {fileID: 8200000}
+  gamedata: {fileID: 0}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1952,6 +1953,7 @@ MonoBehaviour:
   messageText5: {fileID: 0}
   messageTex: {fileID: 0}
   arrowTex: {fileID: 0}
+  fingerTex: {fileID: 0}
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1963,6 +1965,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb2544870e4e8a4394a421146f3628f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 0}
+  player: {fileID: 0}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -2162,7 +2166,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &13600000
+--- !u!136 &13600002
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

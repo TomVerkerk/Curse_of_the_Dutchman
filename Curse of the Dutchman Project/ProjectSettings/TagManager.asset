@@ -10,6 +10,27 @@ TagManager:
   - Environment
   - enemy1
   - enemyShip1
+  - enemyBullet
+  - volumeBlock
+  - endTrigger
+  - Skull
+  - enemy2
+  - enemy3
+  - enemy4
+  - enemy5
+  - enemy6
+  - drop1
+  - drop2
+  - drop3
+  - drop4
+  - drop5
+  - drop6
+  - drop7
+  - drop8
+  - drop9
+  - drop10
+  - drop11
+  - 
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

@@ -13,15 +13,22 @@ public class DockMenu : MonoBehaviour {
 	public GUITexture ammoSuppl2;
 	public GUITexture supplAmmo;
 	public GUITexture statsUI;
+	public GUITexture dockStatsTex;
+	public GUIText dockSupplies;
+	public GUIText dockAmmo;
 	public GUIText dockText1;
 	public GUIText dockText2;
 	public GUIText dockText3;
 	public GUIText dockText4;
-	public GUIText dockTradeText;
+	public GUIText dockTradeText1;
+	public GUIText dockTradeText2;
+	public GUIText dockTradeText3;
 	public string level;
 	public AudioSource plunderSound;
 	public AudioSource buttonClick;
 
+	private float pirates;
+	private float ammo;
 	private float pos = 1;
 	private bool loose = false;
 	private bool back = false;
@@ -32,8 +39,12 @@ public class DockMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		pirates = PlayerPrefs.GetFloat("pirates");
 		PlayerPrefs.SetFloat("dock",1);
-		dockTradeText.enabled = false;
+		dockStatsTex.enabled = true;
+		dockTradeText1.enabled = false;
+		dockTradeText2.enabled = false;
+		dockTradeText3.enabled = false;
 		ammoSuppl1.enabled = false;
 		ammoSuppl2.enabled = false;
 		supplAmmo.enabled = false;
@@ -43,14 +54,17 @@ public class DockMenu : MonoBehaviour {
 		dockText3.enabled = false;
 		dockText4.enabled = false;
 		statsUI.enabled = false;
+		dockSupplies.enabled = true;
+		dockAmmo.enabled = true;
 		PlayerPrefs.SetFloat("supplied",0);
 		PlayerPrefs.SetString("level", "dock");
 		dockTut = PlayerPrefs.GetFloat("dockTut");
 		PlayerPrefs.SetFloat("docked" , 1);
 		PlayerPrefs.SetFloat("sails", 0);
 		PlayerPrefs.SetFloat("movementSpeed", 0);
-		supplies = PlayerPrefs.GetFloat("supplies");
 		fader.color = Color.black;
+		dockStatsTex.pixelInset = new Rect(Screen.width*0.08f,Screen.height*0.175f,Screen.width*0.35f,Screen.height*0.18f);
+		dockStatsTex.color = dockStatsTex.color*1.4f;
 		fader.pixelInset = new Rect(0,0,Screen.width,Screen.height);
 		backTex.pixelInset = new Rect(Screen.width*0.65f,Screen.height*0.05f,Screen.width*0.3f,Screen.height*0.15f);
 		supplyTex.pixelInset = new Rect(Screen.width*0.05f,Screen.height*0.8f,Screen.width*0.3f,Screen.height*0.15f);
@@ -63,21 +77,35 @@ public class DockMenu : MonoBehaviour {
 		dockText2.text = "Here you can trade your supplies for ammo.\nAnd your ammo for new supplies.";
 		dockText3.text = "You can also plunder the harbour for supplies,\nThis may cost one of your pirates.";
 		dockText4.text = "Youve plundered the harbour.";
-		dockTradeText.text = "  1 Ammo                    10 Ammo                     10 Supply\n    for                          for                          for\n10 Supplies                 100 Supplies                    1 Ammo";
+		dockTradeText1.text = " 1 Ammo\n   for\n10 Supplies";
+		dockTradeText2.text = " 10 Ammo\n   for\n100 Supplies";
+		dockTradeText3.text = "10 Supplies\n   for\n 1 Ammo";
 		dockText1.pixelOffset = new Vector2(Screen.width*0.3f,Screen.height*0.6f);
 		dockText2.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.62f);
 		dockText3.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.62f);
 		dockText4.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.6f);
-		dockTradeText.pixelOffset = new Vector2(Screen.width*0.09f,Screen.height*0.58f);
+		dockSupplies.pixelOffset = new Vector2(Screen.width*0.1f,Screen.height*0.3f);
+		dockAmmo.pixelOffset = new Vector2(Screen.width*0.3f,Screen.height*0.3f);
+		dockTradeText1.pixelOffset = new Vector2(Screen.width*0.09f,Screen.height*0.58f);
+		dockTradeText2.pixelOffset = new Vector2(Screen.width*0.44f,Screen.height*0.58f);
+		dockTradeText3.pixelOffset = new Vector2(Screen.width*0.8f,Screen.height*0.58f);
 		dockText1.fontSize = Screen.width/22;
 		dockText2.fontSize = Screen.width/32;
 		dockText3.fontSize = Screen.width/32;
 		dockText4.fontSize = Screen.width/21;
-		dockTradeText.fontSize = Screen.width/30;
+		dockSupplies.fontSize = Screen.width/30;
+		dockAmmo.fontSize = Screen.width/30;
+		dockTradeText1.fontSize = Screen.width/30;
+		dockTradeText2.fontSize = Screen.width/30;
+		dockTradeText3.fontSize = Screen.width/30;
 	}
 
 	// Update is called once per frame
 	void Update () {
+		supplies = PlayerPrefs.GetFloat("supplies");
+		ammo = PlayerPrefs.GetFloat("ammo");
+		dockSupplies.text = "Supplies: "+supplies.ToString();
+		dockAmmo.text = "Ammo: "+ammo.ToString();
 		if(back == true)
 		{
 			fadeSpeed = 0.5f;
@@ -148,39 +176,55 @@ public class DockMenu : MonoBehaviour {
 				supplAmmo.enabled = true;
 				ammoSuppl1.enabled = true;
 				ammoSuppl2.enabled = true;
-				dockTradeText.enabled = true;
+				dockTradeText1.enabled = true;
+				dockTradeText2.enabled = true;
+				dockTradeText3.enabled = true;
 			}
 			if(GUI.Button(new Rect(Screen.width*0.05f,Screen.height*0.05f,Screen.width*0.3f,Screen.height*0.15f),"") && supplied == false && trade == false && PlayerPrefs.GetFloat("supplied") == 0)
 			{
 				//plunder
 				buttonClick.Play();
-				supplies = supplies + (15 + Mathf.Round(Random.value*20));
+				supplies = supplies + (2 + Mathf.Round(Random.value*5));
 				tradeTex.color = tradeTex.color*0.7f;
 				supplyTex.color = supplyTex.color*0.7f;
 				dockText4.enabled = true;
 				dockMessageTex.enabled = true;
-				// display message
 				plunderSound.Play ();
+				if(Random.value>0.6f)
+				{
+					PlayerPrefs.SetFloat("pirates", pirates-1);
+				}
 				PlayerPrefs.SetFloat("supplied",1);
+				PlayerPrefs.SetFloat("pirates", pirates);
+				PlayerPrefs.SetFloat("supplies",supplies);
 				supplied = true;
 			}
 			if(trade == true)
 			{
 				//trade screen
-				if(GUI.Button(new Rect(Screen.width*0.05f,Screen.height*0.05f,Screen.width*0.22f,Screen.height*0.35f),""))
+				if(GUI.Button(new Rect(Screen.width*0.05f,Screen.height*0.05f,Screen.width*0.22f,Screen.height*0.35f),"") && ammo >= 1)
 				{
 					buttonClick.Play();
-					Debug.Log("supplies1");
+					ammo -= 1;
+					supplies += 10;
+					PlayerPrefs.SetFloat("supplies",supplies);
+					PlayerPrefs.SetFloat("ammo",ammo);
 				}
-				if(GUI.Button(new Rect(Screen.width*0.39f,Screen.height*0.05f,Screen.width*0.22f,Screen.height*0.35f),""))
+				if(GUI.Button(new Rect(Screen.width*0.39f,Screen.height*0.05f,Screen.width*0.22f,Screen.height*0.35f),"") && ammo >= 10)
 				{
 					buttonClick.Play();
-					Debug.Log("supplies2");
+					ammo -= 10;
+					supplies += 100;
+					PlayerPrefs.SetFloat("supplies",supplies);
+					PlayerPrefs.SetFloat("ammo",ammo);
 				}
-				if(GUI.Button(new Rect(Screen.width*0.74f,Screen.height*0.05f,Screen.width*0.22f,Screen.height*0.35f),""))
+				if(GUI.Button(new Rect(Screen.width*0.74f,Screen.height*0.05f,Screen.width*0.22f,Screen.height*0.35f),"")&& supplies >= 1)
 				{
 					buttonClick.Play();
-					Debug.Log("supplies3");
+					supplies -= 10;
+					ammo += 1;
+					PlayerPrefs.SetFloat("supplies",supplies);
+					PlayerPrefs.SetFloat("ammo",ammo);
 				}
 			}
 		}

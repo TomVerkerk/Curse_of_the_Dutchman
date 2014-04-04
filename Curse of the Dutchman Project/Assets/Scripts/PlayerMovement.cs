@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour {
 	public AudioSource dockSound;
 	public AudioSource ambientSound;
 
+	private Quaternion loadRotation;
 	private bool enteringLevel = false;
 	private float beginAcceleration;
 	private bool goingIn=false;
@@ -30,7 +31,12 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 openStatsPos = new Vector3(0,-0.18f,0);
 	private Vector3 openStatsTextPos = new Vector3(0,-0.18f,0.1f);
 	private Vector3 closedStatsTextPos = new Vector3(0,0,0.1f);
-	private EnemyHealth enemy;
+	private EnemyHealth enemy1;
+	private EnemyHealth enemy2;
+	private EnemyHealth enemy3;
+	private EnemyHealth enemy4;
+	private EnemyHealth enemy5;
+	private EnemyHealth enemy6;
 	private Vector2 swipeBegin;
 	private Vector2 swipeEnd;
 	private float sails;
@@ -67,6 +73,14 @@ public class PlayerMovement : MonoBehaviour {
 		rotated = PlayerPrefs.GetFloat("dockRotation");
 		sails = PlayerPrefs.GetFloat("sails");
 		fader.enabled = false;
+		if(PlayerPrefs.GetFloat("statsOpen") == 1)
+		{
+			gameData.statsTex.transform.position = openStatsPos;
+			gameData.boatHealthText.transform.position = openStatsTextPos;
+			gameData.boatSuppliesText.transform.position = openStatsTextPos;
+			gameData.piratesText.transform.position = openStatsTextPos;
+			gameData.ammoText.transform.position = openStatsTextPos;
+		}
 		if(rotated == 0)
 		{
 			spawnRotation = Vector3.forward;
@@ -90,295 +104,328 @@ public class PlayerMovement : MonoBehaviour {
 			arrived = false;
 			fader.color = Color.black;
 			PlayerPrefs.SetFloat("dock",0);
-			if(PlayerPrefs.GetFloat("loadGame") == 1)
-			{
-				transform.rotation = new Quaternion(0,PlayerPrefs.GetFloat("rotation"),0,0);
-			}
 		}
 		if(PlayerPrefs.GetString("level") == "Level2")
 		{
-			enemy = GameObject.FindWithTag("enemy1").GetComponent<EnemyHealth>();
+			enemy1 = GameObject.FindWithTag("enemy1").GetComponent<EnemyHealth>();
+		}
+		if(PlayerPrefs.GetString("level") == "Level3")
+		{
+			enemy2 = GameObject.FindWithTag("enemy2").GetComponent<EnemyHealth>();
+		}
+		if(PlayerPrefs.GetString("level") == "Level4")
+		{
+			enemy3 = GameObject.FindWithTag("enemy3").GetComponent<EnemyHealth>();
+		}
+		if(PlayerPrefs.GetString("level") == "Level5")
+		{
+			enemy4 = GameObject.FindWithTag("enemy4").GetComponent<EnemyHealth>();
+			enemy5 = GameObject.FindWithTag("enemy5").GetComponent<EnemyHealth>();
+			enemy6 = GameObject.FindWithTag("enemy6").GetComponent<EnemyHealth>();
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		timer++;
-		if(sails == 0)
-		{
-			sailBack1.SetActive(false);
-			sailBack2.SetActive(false);
-			sailFront1.SetActive(false);
-			sailFront2.SetActive(false);
-		}
-		else if(sails == 1)
-		{
-			sailFront1.SetActive(true);
-			sailFront2.SetActive(true);
-			sailBack1.SetActive(false);
-			sailBack2.SetActive(false);
-		}
-		else
-		{
-			sailFront1.SetActive(true);
-			sailFront2.SetActive(true);
-			sailBack1.SetActive(true);
-			sailBack2.SetActive(true);
-		}
-		if(tutorial.pos > 0)
-		{
-			if(tutorial.pos == 1 && Input.touchCount > 0)
+		if(gameData._dead == false){
+			timer++;
+			if(sails == 0)
 			{
-				tutorial.pos = 2;
-				tutorial.ShowTutorial();
-			}
-			if(tutorial.pos == 2 && Input.touchCount == 0)
-			{
-				nextMessage = true;
-			}
-			if(tutorial.pos == 2 && Input.touchCount > 0 && nextMessage == true)
-			{
-				tutorial.pos = 3;
-				tutorial.ShowTutorial();
-				nextMessage = false;
-			}
-			if(tutorial.pos == 7 && Input.touchCount > 0 && nextMessage == true)
-			{
-				tutorial.pos = 8;
-				tutorial.ShowTutorial();
-				nextMessage = false;
-			}
-		}
-		if(timer >= (supplyDropTime/(sails+1)))
-		{
-			if(gameData.supplies <= 0)
-			{
-				supplyDropTime = startSupplyDropTime * 1.5f;
-				gameData.pirates -=1;
-			}
-			else
-			{
-				supplyDropTime = startSupplyDropTime;
-				gameData.supplies -=1;
-			}
-			timer = 0;
-		}
-		foreach(var T in Input.touches)
-		{
-			if(T.phase == TouchPhase.Began)
-			{
-				swipeBegin.x = ((100f/Screen.width)*T.position.x);
-				swipeBegin.y = ((100f/Screen.height)*T.position.y);
-			}
-			else if(T.phase == TouchPhase.Ended)
-			{
-				swipeEnd.x = ((100f/Screen.width)*T.position.x);
-				swipeEnd.y = ((100f/Screen.height)*T.position.y);
-				if(swipeBegin.x < 50 && swipeBegin.y > 85 && swipeEnd.y <= swipeBegin.y - 10)
-				{
-					if(tutorial.pos == 2 || tutorial.pos == 1)
-					{
-						break;
-					}
-					gameData.statsTex.transform.position = openStatsPos;
-					gameData.boatHealthText.transform.position = openStatsTextPos;
-					gameData.boatSuppliesText.transform.position = openStatsTextPos;
-					gameData.piratesText.transform.position = openStatsTextPos;
-					gameData.ammoText.transform.position = openStatsTextPos;
-					if(tutorial.pos == 3)
-					{
-						tutorial.pos = 5;
-						tutorial.ShowTutorial();
-					}
-				}
-				else if(swipeBegin.x < 50 && swipeBegin.y > 70 && swipeEnd.y > swipeBegin.y + 5)
-				{
-					gameData.statsTex.transform.position = Vector3.zero;
-					gameData.boatHealthText.transform.position = closedStatsTextPos;
-					gameData.boatSuppliesText.transform.position = closedStatsTextPos;
-					gameData.piratesText.transform.position = closedStatsTextPos;
-					gameData.ammoText.transform.position = closedStatsTextPos;
-				}
-				else if(swipeBegin.y - swipeEnd.y < -minSwipePer && sails < 2)
-				{
-					sails += 1;
-					if(tutorial.pos <= 4 && tutorial.pos > 0)
-					{
-						sails = 0;
-					}
-					if(tutorial.pos == 5)
-					{
-						tutorial.pos = 6;
-						tutorial.ShowTutorial();
-					}
-				}
-				else if(swipeBegin.y - swipeEnd.y > minSwipePer && sails > 0)
-				{
-					sails -= 1;
-				}
-			}
-		}
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			Application.LoadLevel("Menu");
-		}
-		if(fading == true)
-		{
-			FadeIn();
-		}
-		if(!docking)
-		{
-			if (!ambientSound.isPlaying)
-			{
-				ambientSound.Play();
-			}
-			if(dockSound.isPlaying)
-			{
-				dockSound.Stop();
-			}
-			if(enteringLevel == false)
-			{
-				PlayerPrefs.SetFloat("rotation",transform.rotation.y);
-				PlayerPrefs.SetFloat("spawnX",transform.position.x);
-				PlayerPrefs.SetFloat("spawnZ",transform.position.z);
-			}
-			acceleration = Input.acceleration;
-			transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-			if(sails == 2)
-			{
-				accelerationFactor = beginAcceleration * 1.5f;
+				sailBack1.SetActive(false);
+				sailBack2.SetActive(false);
+				sailFront1.SetActive(false);
+				sailFront2.SetActive(false);
 			}
 			else if(sails == 1)
 			{
-				accelerationFactor = beginAcceleration;
-			}
-			if(movementSpeed <= (maxSpeed * sails))
-			{
-				movementSpeed += accelerationFactor;
-			}
-			else if(movementSpeed <=0)
-			{
-				movementSpeed = 0;
-			}
-			else if(tutorial.pos == 6 && movementSpeed > maxSpeed)
-			{
-				tutorial.pos = 7;
-				tutorial.ShowTutorial();
+				sailFront1.SetActive(true);
+				sailFront2.SetActive(true);
+				sailBack1.SetActive(false);
+				sailBack2.SetActive(false);
 			}
 			else
 			{
-				movementSpeed -= accelerationFactor;
-				if(tutorial.pos == 7)
+				sailFront1.SetActive(true);
+				sailFront2.SetActive(true);
+				sailBack1.SetActive(true);
+				sailBack2.SetActive(true);
+			}
+			if(tutorial.pos > 0)
+			{
+				if(tutorial.pos == 1 && Input.touchCount > 0)
+				{
+					tutorial.pos = 2;
+					tutorial.ShowTutorial();
+				}
+				if(tutorial.pos == 2 && Input.touchCount == 0)
 				{
 					nextMessage = true;
 				}
-			}
-			rotate = movementSpeed * rotateSpeed;
-			if(acceleration.x >= minRotation || acceleration.x <= -minRotation)
-			{
-				if(acceleration.x >= 0.6)
+				if(tutorial.pos == 2 && Input.touchCount > 0 && nextMessage == true)
 				{
-					acceleration.x = 0.7f;
+					tutorial.pos = 3;
+					tutorial.ShowTutorial();
+					nextMessage = false;
 				}
-				if(acceleration.x <= -0.6)
+				if(tutorial.pos == 7 && Input.touchCount > 0 && nextMessage == true)
 				{
-					acceleration.x = -0.7f;
+					tutorial.pos = 8;
+					tutorial.ShowTutorial();
+					nextMessage = false;
 				}
-				transform.Rotate(new Vector3(0,acceleration.x,0)*rotate*Time.deltaTime);
 			}
-		}
-		if(PlayerPrefs.GetFloat("docked") == 1)
-		{
-			gameData.dockTex.color = startcol*0.7f;
-		}
-		else
-		{
-			gameData.dockTex.color = startcol;
-		}
-		if(docking)
-		{
-			if (ambientSound.isPlaying)
+			if(timer >= (supplyDropTime/(sails+1)))
 			{
-				ambientSound.Stop();
-			}
-			if(!dockSound.isPlaying)
-			{
-				dockSound.Play();
-			}
-			gameData.dockTex.enabled = false;
-			if(transform.position.x < dock.transform.position.x && arrived == false)
-			{
-				if(transform.position.x > leftDock.x)
+				if(gameData.supplies <= 0)
 				{
-					transform.LookAt(transform.position + Vector3.left);
+					supplyDropTime = startSupplyDropTime * 1.5f;
+					gameData.pirates -=1;
 				}
 				else
 				{
-					transform.LookAt(leftDock);
+					supplyDropTime = startSupplyDropTime;
+					gameData.supplies -=1;
 				}
-				if(rotated == 1)
+				timer = 0;
+			}
+			foreach(var T in Input.touches)
+			{
+				if(T.phase == TouchPhase.Began)
 				{
-					dock.gameObject.GetComponent<DockBehaviour>().actionCamLeft.SetActive(true);
+					swipeBegin.x = ((100f/Screen.width)*T.position.x);
+					swipeBegin.y = ((100f/Screen.height)*T.position.y);
 				}
-				else
+				else if(T.phase == TouchPhase.Ended)
 				{
-					dock.gameObject.GetComponent<DockBehaviour>().actionCamRight.SetActive(true);
+					swipeEnd.x = ((100f/Screen.width)*T.position.x);
+					swipeEnd.y = ((100f/Screen.height)*T.position.y);
+					if(swipeBegin.x < 50 && swipeBegin.y > 85 && swipeEnd.y <= swipeBegin.y - 10)
+					{
+						if(tutorial.pos == 2 || tutorial.pos == 1)
+						{
+							break;
+						}
+						gameData.statsTex.transform.position = openStatsPos;
+						gameData.boatHealthText.transform.position = openStatsTextPos;
+						gameData.boatSuppliesText.transform.position = openStatsTextPos;
+						gameData.piratesText.transform.position = openStatsTextPos;
+						gameData.ammoText.transform.position = openStatsTextPos;
+						PlayerPrefs.SetFloat("statsOpen",1);
+						if(tutorial.pos == 3)
+						{
+							tutorial.pos = 5;
+							tutorial.ShowTutorial();
+						}
+					}
+					else if(swipeBegin.x < 50 && swipeBegin.y > 70 && swipeEnd.y > swipeBegin.y + 5)
+					{
+						gameData.statsTex.transform.position = Vector3.zero;
+						gameData.boatHealthText.transform.position = closedStatsTextPos;
+						gameData.boatSuppliesText.transform.position = closedStatsTextPos;
+						gameData.piratesText.transform.position = closedStatsTextPos;
+						gameData.ammoText.transform.position = closedStatsTextPos;
+						PlayerPrefs.SetFloat("statsOpen",0);
+					}
+					else if(swipeBegin.y - swipeEnd.y < -minSwipePer && sails < 2)
+					{
+						sails += 1;
+						if(tutorial.pos <= 4 && tutorial.pos > 0)
+						{
+							sails = 0;
+						}
+						if(tutorial.pos == 5)
+						{
+							tutorial.pos = 6;
+							tutorial.ShowTutorial();
+						}
+					}
+					else if(swipeBegin.y - swipeEnd.y > minSwipePer && sails > 0)
+					{
+						sails -= 1;
+					}
 				}
+			}
+			if(Input.GetKeyDown(KeyCode.Escape))
+			{
+				Application.LoadLevel("Menu");
+			}
+			if(fading == true)
+			{
+				FadeIn();
+			}
+			if(!docking)
+			{
+				if (!ambientSound.isPlaying)
+				{
+					ambientSound.Play();
+				}
+				if(dockSound.isPlaying)
+				{
+					dockSound.Stop();
+				}
+				if(enteringLevel == false)
+				{
+					PlayerPrefs.SetFloat("spawnX",transform.position.x);
+					PlayerPrefs.SetFloat("spawnZ",transform.position.z);
+				}
+				acceleration = Input.acceleration;
 				transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-				PlayerPrefs.SetFloat("spawnX",leftDock.x);
-				PlayerPrefs.SetFloat("spawnZ",leftDock.z);
-			}
-			if(transform.position.x >= dock.transform.position.x && arrived == false)
-			{
-				if(transform.position.x < rightDock.x)
+				if(sails == 2)
 				{
-					transform.LookAt(transform.position + Vector3.right);
+					accelerationFactor = beginAcceleration * 1.5f;
+				}
+				else if(sails == 1)
+				{
+					accelerationFactor = beginAcceleration;
+				}
+				if(movementSpeed <= (maxSpeed * sails))
+				{
+					movementSpeed += accelerationFactor;
+				}
+				else if(movementSpeed <=0)
+				{
+					movementSpeed = 0;
+				}
+				else if(tutorial.pos == 6 && movementSpeed > maxSpeed)
+				{
+					tutorial.pos = 7;
+					tutorial.ShowTutorial();
 				}
 				else
 				{
-					transform.LookAt(rightDock);
+					movementSpeed -= accelerationFactor;
+					if(tutorial.pos == 7)
+					{
+						nextMessage = true;
+					}
 				}
-				if(rotated == 1)
+				rotate = movementSpeed * rotateSpeed;
+				if(acceleration.x >= minRotation || acceleration.x <= -minRotation)
 				{
-					dock.gameObject.GetComponent<DockBehaviour>().actionCamRight.SetActive(true);
+					if(acceleration.x >= 0.6)
+					{
+						acceleration.x = 0.7f;
+					}
+					if(acceleration.x <= -0.6)
+					{
+						acceleration.x = -0.7f;
+					}
+					transform.Rotate(new Vector3(0,acceleration.x,0)*rotate*Time.deltaTime);
 				}
-				else
-				{
-					dock.gameObject.GetComponent<DockBehaviour>().actionCamLeft.SetActive(true);
-				}
-				transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-				PlayerPrefs.SetFloat("spawnX",rightDock.x);
-				PlayerPrefs.SetFloat("spawnZ",rightDock.z);
 			}
-			mainCam.SetActive(false);
-			movementSpeed = 3;
-			leftDockDis = (leftDock.x - transform.position.x)*(leftDock.x - transform.position.x)+(leftDock.z - transform.position.z)*(leftDock.z - transform.position.z);
-			rightDockDis = (rightDock.x - transform.position.x)*(rightDock.x - transform.position.x)+(rightDock.z - transform.position.z)*(rightDock.z - transform.position.z);
-			if(leftDockDis < 5 || rightDockDis < 5)
+			if(PlayerPrefs.GetFloat("docked") == 1)
 			{
-				goingIn = true;
+				gameData.dockTex.color = startcol*0.7f;
 			}
-			if(goingIn == true)
+			else
 			{
-				if(rotated == 1)
+				gameData.dockTex.color = startcol;
+			}
+			if(docking)
+			{
+				if (ambientSound.isPlaying)
 				{
-					transform.LookAt(transform.position + Vector3.forward);
+					ambientSound.Stop();
 				}
-				else
+				if(!dockSound.isPlaying)
 				{
-					transform.LookAt(transform.position + Vector3.back);
+					dockSound.Play();
 				}
-				transform.Translate(Vector3.zero);
-				arrived = true;
-				fader.enabled = true;
-				PlayerPrefs.SetFloat("supplies", gameData.supplies);
-				if(enemy != null)
+				gameData.dockTex.enabled = false;
+				if(transform.position.x < dock.transform.position.x && arrived == false)
 				{
-					PlayerPrefs.SetFloat("enemy1Health", enemy.enemyHealth);//enemy name?
+					if(transform.position.x > leftDock.x)
+					{
+						transform.LookAt(transform.position + Vector3.left);
+					}
+					else
+					{
+						transform.LookAt(leftDock);
+					}
+					if(rotated == 1)
+					{
+						dock.gameObject.GetComponent<DockBehaviour>().actionCamLeft.SetActive(true);
+					}
+					else
+					{
+						dock.gameObject.GetComponent<DockBehaviour>().actionCamRight.SetActive(true);
+					}
+					transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+					PlayerPrefs.SetFloat("spawnX",leftDock.x);
+					PlayerPrefs.SetFloat("spawnZ",leftDock.z);
 				}
-				PlayerPrefs.SetFloat("supplies", gameData.supplies);
-				PlayerPrefs.SetFloat("pirates", gameData.pirates);
-				FadeOut("Dock");
+				if(transform.position.x >= dock.transform.position.x && arrived == false)
+				{
+					if(transform.position.x < rightDock.x)
+					{
+						transform.LookAt(transform.position + Vector3.right);
+					}
+					else
+					{
+						transform.LookAt(rightDock);
+					}
+					if(rotated == 1)
+					{
+						dock.gameObject.GetComponent<DockBehaviour>().actionCamRight.SetActive(true);
+					}
+					else
+					{
+						dock.gameObject.GetComponent<DockBehaviour>().actionCamLeft.SetActive(true);
+					}
+					transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+					PlayerPrefs.SetFloat("spawnX",rightDock.x);
+					PlayerPrefs.SetFloat("spawnZ",rightDock.z);
+				}
+				mainCam.SetActive(false);
+				movementSpeed = 3;
+				leftDockDis = (leftDock.x - transform.position.x)*(leftDock.x - transform.position.x)+(leftDock.z - transform.position.z)*(leftDock.z - transform.position.z);
+				rightDockDis = (rightDock.x - transform.position.x)*(rightDock.x - transform.position.x)+(rightDock.z - transform.position.z)*(rightDock.z - transform.position.z);
+				if(leftDockDis < 5 || rightDockDis < 5)
+				{
+					goingIn = true;
+				}
+				if(goingIn == true)
+				{
+					if(rotated == 1)
+					{
+						transform.LookAt(transform.position + Vector3.forward);
+					}
+					else
+					{
+						transform.LookAt(transform.position + Vector3.back);
+					}
+					transform.Translate(Vector3.zero);
+					arrived = true;
+					fader.enabled = true;
+					PlayerPrefs.SetFloat("supplies", gameData.supplies);
+					if(enemy1 != null)
+					{
+						PlayerPrefs.SetFloat("enemy1Health", enemy1.enemyHealth);
+					}
+					else if(enemy2 != null)
+					{
+						PlayerPrefs.SetFloat("enemy2Health", enemy2.enemyHealth);
+					}
+					else if(enemy3 != null)
+					{
+						PlayerPrefs.SetFloat("enemy3Health", enemy3.enemyHealth);
+					}
+					else if(enemy4 != null)
+					{
+						PlayerPrefs.SetFloat("enemy4Health", enemy4.enemyHealth);
+					}
+					else if(enemy5 != null)
+					{
+						PlayerPrefs.SetFloat("enemy5Health", enemy5.enemyHealth);
+					}
+					else if(enemy6 != null)
+					{
+						PlayerPrefs.SetFloat("enemy6Health", enemy6.enemyHealth);
+					}
+					PlayerPrefs.SetFloat("supplies", gameData.supplies);
+					PlayerPrefs.SetFloat("pirates", gameData.pirates);
+					FadeOut("Dock");
+				}
 			}
 		}
 	}
@@ -414,9 +461,29 @@ public class PlayerMovement : MonoBehaviour {
 			PlayerPrefs.SetFloat("supplies", gameData.supplies);
 			PlayerPrefs.SetFloat("movementSpeed", movementSpeed);
 			PlayerPrefs.SetFloat("sails", sails);
-			if(enemy != null)
+			if(enemy1 != null)
 			{
-				PlayerPrefs.SetFloat("enemy1Health", enemy.enemyHealth);//enemy name
+				PlayerPrefs.SetFloat("enemy1Health", enemy1.enemyHealth);
+			}
+			else if(enemy2 != null)
+			{
+				PlayerPrefs.SetFloat("enemy2Health", enemy2.enemyHealth);
+			}
+			else if(enemy3 != null)
+			{
+				PlayerPrefs.SetFloat("enemy3Health", enemy3.enemyHealth);
+			}
+			else if(enemy4 != null)
+			{
+				PlayerPrefs.SetFloat("enemy4SHealth", enemy4.enemyHealth);
+			}
+			else if(enemy5 != null)
+			{
+				PlayerPrefs.SetFloat("enemy5SHealth", enemy5.enemyHealth);
+			}
+			else if(enemy6 != null)
+			{
+				PlayerPrefs.SetFloat("enemy6SHealth", enemy6.enemyHealth);
 			}
 			if(trigger.gameObject.GetComponent<NextLevel>().back == true)
 			{
@@ -493,20 +560,22 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 	
-	void FadeOut(string nextLevel)
+	public void FadeOut(string nextLevel)
 	{
 		fader.enabled = true;
 		fader.color = Color.Lerp(fader.color, Color.black, fadeSpeed*1.2f * Time.deltaTime);
+		ambientSound.volume = fader.color.a*2;
 		if(fader.color.a >= 0.5)
 		{
 			Application.LoadLevel(nextLevel);
 		}
 	}
 	
-	void FadeIn()
+	public void FadeIn()
 	{
 		fader.enabled = true;
 		fader.color = Color.Lerp(fader.color, Color.clear, fadeSpeed * Time.deltaTime);
+		ambientSound.volume = 1-fader.color.a;
 		if(fader.color.a <= 0.02)
 		{
 			fader.enabled = false;

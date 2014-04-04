@@ -19,7 +19,7 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 0
   m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 115d57928bbe51541b59ce7fc1724346, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e07f2d912ce196045b427c95461b6b5b, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -321,11 +321,11 @@ Transform:
   m_PrefabParentObject: {fileID: 400004, guid: b7f69371050e51e4dafd6a653f792141, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 600500446}
-  m_LocalRotation: {x: -.00455019483, y: -.998859048, z: -.0463810191, w: .0104296766}
-  m_LocalPosition: {x: 7.58248043, y: -10.1704178, z: 22.7998505}
+  m_LocalRotation: {x: .0770063549, y: -.37064293, z: .0308539588, w: .925063193}
+  m_LocalPosition: {x: -16.5062866, y: 1.20141459, z: 7.25062847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 719871091}
+  m_Father: {fileID: 0}
 --- !u!81 &600500449
 AudioListener:
   m_ObjectHideFlags: 0
@@ -392,6 +392,7 @@ GameObject:
   - 114: {fileID: 608130180}
   - 65: {fileID: 608130183}
   - 54: {fileID: 608130184}
+  - 114: {fileID: 608130182}
   m_Layer: 0
   m_Name: the flying dutchman
   m_TagString: Untagged
@@ -405,8 +406,8 @@ Transform:
   m_PrefabParentObject: {fileID: 400022, guid: b7f69371050e51e4dafd6a653f792141, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 608130178}
-  m_LocalRotation: {x: 0, y: .999998987, z: 0, w: -.00145458686}
-  m_LocalPosition: {x: 9.71776772, y: -11.494071, z: 17.7686691}
+  m_LocalRotation: {x: 0, y: .407994121, z: 0, w: .91298461}
+  m_LocalPosition: {x: -19.5952759, y: -1.20671177, z: 10.1824846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 676779809}
@@ -416,7 +417,7 @@ Transform:
   - {fileID: 2106532706}
   - {fileID: 313776842}
   - {fileID: 1996843248}
-  m_Father: {fileID: 719871091}
+  m_Father: {fileID: 0}
 --- !u!114 &608130180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,6 +449,17 @@ Animator:
   m_ApplyRootMotion: 1
   m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
+--- !u!114 &608130182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 608130178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469b27bdbc3c78846a97756327344b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &608130183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -533,47 +545,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 676779808}
   m_Mesh: {fileID: 4300010, guid: c1afa4afdf89b96408271c34c9c7c925, type: 3}
---- !u!1 &719871090
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 719871091}
-  - 114: {fileID: 719871092}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &719871091
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 719871090}
-  m_LocalRotation: {x: 0, y: .236785427, z: 0, w: .971562028}
-  m_LocalPosition: {x: -9.71776772, y: 11.494071, z: -17.7686691}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 600500447}
-  - {fileID: 608130179}
-  m_Father: {fileID: 0}
---- !u!114 &719871092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 719871090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38b4e65e3c818c048b3d8c2bbd685b69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: -1
 --- !u!1 &878172944
 GameObject:
   m_ObjectHideFlags: 0

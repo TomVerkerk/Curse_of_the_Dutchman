@@ -21,6 +21,8 @@ public class Tutorial : MonoBehaviour {
 	{
 		pos = PlayerPrefs.GetFloat("tutPos");
 		messageTex.enabled = false;
+		messageTex.color = messageTex.color*1.5f;
+		arrowTex.color = arrowTex.color*0.7f;
 		arrowTex.enabled = false;
 		fingerTex.enabled = false;
 		messageText1.enabled = false;
@@ -31,7 +33,7 @@ public class Tutorial : MonoBehaviour {
 		if(pos == 1)
 		{
 			messageTex.pixelInset = new Rect(Screen.width*0.2f, Screen.height*0.4f,Screen.width*0.6f,Screen.height*0.3f);
-			arrowTex.pixelInset = new Rect(Screen.width*0.2f, Screen.height*0.6f,Screen.width*0.1f,Screen.height*0.35f);
+			arrowTex.pixelInset = new Rect(Screen.width*0.2f, Screen.height*0.7f,Screen.width*0.1f,Screen.height*0.25f);
 			fingerTex.pixelInset = new Rect(Screen.width*0.65f,Screen.height*0.2f,Screen.width*0.23f,Screen.height*0.38f);
 			messageText1.text = "Welcome aboard ship, Captain.";
 			messageText2.text = "Your ship has limited supplies,\nDon't let them run out or your crew will starve.";

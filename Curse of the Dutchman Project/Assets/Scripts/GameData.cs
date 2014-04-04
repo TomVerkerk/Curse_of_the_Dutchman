@@ -12,17 +12,26 @@ public class GameData : MonoBehaviour {
 	public GUIText boatSuppliesText;
 	public GUIText piratesText;
 	public GUIText ammoText;
+	public GUIText gameOverText;
+	public GUIText noSkullText;
 
 	public GUITexture evadeTex;
 	public GUITexture dockTex;
 	public GUITexture battleTex;
 	public GUITexture shootTex;
 	public GUITexture statsTex;
+	public GUITexture noSkullMessageTex;
+
+	public AudioSource Inpact;
 
 	private float random;
+	public bool _dead = false;
 
 	// Use this for initialization
 	void Start () {
+		noSkullText.enabled = false;
+		noSkullMessageTex.enabled = false;
+		gameOverText.enabled = false;
 		dockTex.enabled = false;
 		battleTex.enabled = false;
 		shootTex.enabled = false;
@@ -31,6 +40,11 @@ public class GameData : MonoBehaviour {
 		{
 			statsTex.enabled = true;
 		}
+		noSkullText.pixelOffset = new Vector2(Screen.width*0.3f,Screen.height*0.65f);
+		noSkullText.text = "You need the skull!\nGo back to find it.";
+		noSkullText.fontSize = Screen.width/30;
+		noSkullMessageTex.pixelInset = new Rect(Screen.width*0.2f, Screen.height*0.4f,Screen.width*0.6f,Screen.height*0.3f);
+		gameOverText.pixelOffset = new Vector2 (Screen.width *0.3f, Screen.height * 0.63f);
 		statsTex.pixelInset = new Rect(Screen.width*0.052f,Screen.height*1.015f,Screen.width*0.4f,Screen.height*0.1f);
 		evadeTex.pixelInset = new Rect(Screen.width*0.05f,Screen.height*0.05f,Screen.width*0.3f,Screen.height*0.15f);
 		shootTex.pixelInset = new Rect(Screen.width*0.65f,Screen.height*0.05f,Screen.width*0.3f,Screen.height*0.15f);
@@ -44,11 +58,13 @@ public class GameData : MonoBehaviour {
 		piratesText.fontSize = Screen.width/25;
 		ammoText.pixelOffset = new Vector2(Screen.width*0.28f,Screen.height*1.14f);
 		ammoText.fontSize = Screen.width/25;
+		gameOverText.text = "You died!\nTap the screen to play again";
+		gameOverText.fontSize = Screen.width / 25;
 		if(PlayerPrefs.GetFloat("first") == 1)
 		{
 			boatHealth = 100;
 			random = Mathf.Round(Random.value*10);
-			supplies = 20 + random;
+			supplies = 15 + random;
 			random = Mathf.Round(Random.value*10);
 			pirates = 10 + random;
 			random = Mathf.Round(Random.value*5);
@@ -72,7 +88,13 @@ public class GameData : MonoBehaviour {
 		if(boatHealth <= 0)
 		{
 			boatHealth = 0;
-			Debug.Log("U dead");
+			PlayerPrefs.SetFloat("died",1);
+			noSkullMessageTex.enabled = true;
+			gameOverText.enabled = true;
+			_dead = true;
+		}
+		if (_dead == true && Input.touchCount >= 1) {
+			Application.LoadLevel("Menu");
 		}
 		if(supplies <= 0)
 		{
@@ -81,6 +103,10 @@ public class GameData : MonoBehaviour {
 		if(pirates <= 0)
 		{
 			pirates = 0;
+			PlayerPrefs.SetFloat("died",1);
+			noSkullText.enabled = true;
+			gameOverText.enabled = true;
+			_dead = true;
 		}
 		if(ammo <= 0)
 		{

@@ -111,8 +111,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 63.6532288, y: 0, z: 96.1099777}
-  m_LocalScale: {x: 4, y: 2, z: 16}
+  m_LocalPosition: {x: 64.8043442, y: 0, z: 98.6001282}
+  m_LocalScale: {x: 2.49529934, y: 1.24764967, z: 9.98119736}
   m_Children:
   - {fileID: 400004}
   - {fileID: 400006}
@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: 1.41382122, y: 4.09093571, z: 1.3287282}
+  m_LocalPosition: {x: 1.41382122, y: 4.0999999, z: 1.3287282}
   m_LocalScale: {x: .5, y: 1, z: .125}
   m_Children: []
   m_Father: {fileID: 400002}
@@ -222,7 +222,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 10e46a6f92b42514c932e88ee5a259f7, type: 2}
+  - {fileID: 2100000, guid: e1d60fa85edc90b4dbe3787c91733200, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -243,7 +243,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 10e46a6f92b42514c932e88ee5a259f7, type: 2}
+  - {fileID: 2100000, guid: 673d696b20c2fa64a97e2d3252616ffb, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -364,8 +364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba6f4879ef5e4d40a9a6cb2ca258c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dockOffsetNeg: {x: -2.79999995, y: 0, z: -.200000003}
-  dockOffset: {x: 2.79999995, y: 0, z: -.200000003}
+  dockOffsetNeg: {x: -3.0999999, y: 0, z: -.699999988}
+  dockOffset: {x: 3.0999999, y: 0, z: -.699999988}
   leftDock: {x: 0, y: 0, z: 0}
   rightDock: {x: 0, y: 0, z: 0}
   actionCamLeft: {fileID: 100006}

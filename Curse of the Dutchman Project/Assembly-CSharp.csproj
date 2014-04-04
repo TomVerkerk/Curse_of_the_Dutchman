@@ -50,15 +50,19 @@
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraBehaviour.cs" />
      <Compile Include="Assets\Scripts\CollisionPush.cs" />
+     <Compile Include="Assets\Scripts\CutScene.cs" />
+     <Compile Include="Assets\Scripts\DeathScript.cs" />
      <Compile Include="Assets\Scripts\DockBehaviour.cs" />
      <Compile Include="Assets\Scripts\DockMenu.cs" />
      <Compile Include="Assets\Scripts\DropScript.cs" />
+     <Compile Include="Assets\Scripts\DropWobble.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\EnemyColl.cs" />
      <Compile Include="Assets\Scripts\EnemyHealth.cs" />
      <Compile Include="Assets\Scripts\EnemyMove.cs" />
      <Compile Include="Assets\Scripts\FPSCounter.cs" />
      <Compile Include="Assets\Scripts\GameData.cs" />
+     <Compile Include="Assets\Scripts\IntroVideo\IntroSinker.cs" />
      <Compile Include="Assets\Scripts\IntroVideo\IntroVideoPlayer.cs" />
      <Compile Include="Assets\Scripts\IntroVideo\IntroVideoTrigger.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
@@ -69,6 +73,7 @@
      <Compile Include="Assets\Scripts\TouchTest.cs" />
      <Compile Include="Assets\Scripts\Trailer\ShipMovement.cs" />
      <Compile Include="Assets\Scripts\Tutorial.cs" />
+     <Compile Include="Assets\Scripts\VidTest.cs" />
      <Compile Include="Assets\Scripts\Wobbler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
