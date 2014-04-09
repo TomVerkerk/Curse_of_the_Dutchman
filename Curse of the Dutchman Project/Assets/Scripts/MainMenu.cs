@@ -9,10 +9,14 @@ public class MainMenu : MonoBehaviour {
 	public GUITexture fader;
 	public GUIText tutorial;
 	public GUIText tutorialCheck;
+	public GUIText intro;
+	public GUIText introCheck;
 	public float fadeSpeed;
 	public string nextLevel;
 	public AudioSource buttonClick;
 
+	private bool introBool = true;
+	private bool seen = false;
 	private bool tutorialBool = true;
 	private bool win = false;
 	private bool credits = false;
@@ -23,11 +27,16 @@ public class MainMenu : MonoBehaviour {
 	void Start(){
 		tutorial.text = "Tutorial:";
 		tutorialCheck.text = "Tutorial: *";
+		intro.text = "Intro:";
+		introCheck.text = "Intro: *";
 		tutorialCheck.pixelOffset = new Vector2(Screen.width*0.02f,Screen.height*0.07f);
 		tutorialCheck.fontSize = Screen.width/35;
 		tutorial.pixelOffset = new Vector2(Screen.width*0.02f,Screen.height*0.07f);
-		tutorial.fontSize = Screen.width/30;
-		tutorialCheck.fontSize = Screen.width/30;
+		tutorial.fontSize = Screen.width/35;
+		intro.pixelOffset = new Vector2(Screen.width*0.02f,Screen.height*0.15f);
+		intro.fontSize = Screen.width/35;
+		introCheck.pixelOffset = new Vector2(Screen.width*0.02f,Screen.height*0.15f);
+		introCheck.fontSize = Screen.width/35;
 		if(PlayerPrefs.GetFloat("win") == 1)
 		{
 			winTex.pixelInset = new Rect(0,0,Screen.width,Screen.height);
@@ -39,14 +48,10 @@ public class MainMenu : MonoBehaviour {
 			winTex.enabled = false;
 			Menu();
 		}
-		if(PlayerPrefs.GetFloat("menuTut")==0)
-		{
-			tutorialBool = false;
-		}
-		else if(PlayerPrefs.GetFloat("menuTut")==1)
-		{
-			tutorialBool = true;
-		}
+		tutorialCheck.enabled = true;
+		introCheck.enabled = true;
+		tutorial.enabled = false;
+		intro.enabled = false;
 	}
 
 	void Menu()
@@ -68,6 +73,7 @@ public class MainMenu : MonoBehaviour {
 		                       Screen.height * 0.93f, 
 		                       Screen.width * 0.2f, Screen.height * 0.07f),"")&& credits == false)
 		{
+			buttonClick.Play();
 			if(tutorialBool == true)
 			{
 				tutorialBool = false;
@@ -75,6 +81,20 @@ public class MainMenu : MonoBehaviour {
 			else if(tutorialBool == false)
 			{
 				tutorialBool = true;
+			}
+		}
+		if(GUI.Button(new Rect(Screen.width * 0,
+		                       Screen.height * 0.84f, 
+		                       Screen.width * 0.2f, Screen.height * 0.07f),"")&& credits == false)
+		{
+			buttonClick.Play();
+			if(introBool == true)
+			{
+				introBool = false;
+			}
+			else if(introBool == false)
+			{
+				introBool = true;
 			}
 		}
 		if(GUI.Button(new Rect(Screen.width * 0.28f,
@@ -93,6 +113,14 @@ public class MainMenu : MonoBehaviour {
 				PlayerPrefs.SetFloat("tutPos", 0);
 				PlayerPrefs.SetFloat("dockTut", 0);
 			}
+			if(introBool == true)
+			{
+				PlayerPrefs.SetFloat("intro", 1);
+			}
+			else if(introBool == false)
+			{
+				PlayerPrefs.SetFloat("intro", 0);
+			}
 			PlayerPrefs.SetFloat("Skull",0);
 			PlayerPrefs.SetFloat("first", 1);
 			PlayerPrefs.SetFloat("enemy1Health", 2);
@@ -101,21 +129,27 @@ public class MainMenu : MonoBehaviour {
 			PlayerPrefs.SetFloat("enemy4Health", 2);
 			PlayerPrefs.SetFloat("enemy5Health", 2);
 			PlayerPrefs.SetFloat("enemy6Health", 2);
-			PlayerPrefs.SetFloat("dock1",0);
-			PlayerPrefs.SetFloat("dock2",0);
-			PlayerPrefs.SetFloat("dock3",0);
-			PlayerPrefs.SetFloat("dock4",0);
-			PlayerPrefs.SetFloat("dock5",0);
-			PlayerPrefs.SetFloat("dock6",0);
-			PlayerPrefs.SetFloat("dock7",0);
-			PlayerPrefs.SetFloat("dock8",0);
-			PlayerPrefs.SetFloat("dock9",0);
-			PlayerPrefs.SetFloat("dock10",0);
-			PlayerPrefs.SetFloat("dock11",0);
-			PlayerPrefs.SetString("level", "level1");
+			PlayerPrefs.SetFloat("drop1",0);
+			PlayerPrefs.SetFloat("drop2",0);
+			PlayerPrefs.SetFloat("drop3",0);
+			PlayerPrefs.SetFloat("drop4",0);
+			PlayerPrefs.SetFloat("drop5",0);
+			PlayerPrefs.SetFloat("drop6",0);
+			PlayerPrefs.SetFloat("drop7",0);
+			PlayerPrefs.SetFloat("drop8",0);
+			PlayerPrefs.SetFloat("drop9",0);
+			PlayerPrefs.SetFloat("drop10",0);
+			PlayerPrefs.SetFloat("drop11",0);
+			PlayerPrefs.SetString("level", "Level1");
 			PlayerPrefs.SetFloat("startGame", 1);
 			PlayerPrefs.SetFloat("died",0);
 			PlayerPrefs.SetFloat("statsOpen",0);
+			PlayerPrefs.SetFloat("skullLevel",0);
+			PlayerPrefs.SetFloat("suppliedLevel1",0);
+			PlayerPrefs.SetFloat("suppliedLevel2",0);
+			PlayerPrefs.SetFloat("suppliedLevel3",0);
+			PlayerPrefs.SetFloat("suppliedLevel4",0);
+			PlayerPrefs.SetFloat("suppliedLevel5",0);
 			startGame = true;
 		}
 		if(GUI.Button(new Rect(Screen.width * 0.28f,
@@ -128,19 +162,24 @@ public class MainMenu : MonoBehaviour {
 			PlayerPrefs.SetFloat("dockTut", 0);
 			PlayerPrefs.SetFloat("first", 0);
 			PlayerPrefs.SetFloat("loadGame", 1);
+			PlayerPrefs.SetFloat("Intro",0);
 			loadGame = true;
 			startGame = true;
 		}
 		if(GUI.Button(new Rect(Screen.width * 0.28f,
 		                       Screen.height * 0.61f, 
-		                       Screen.width * 0.4f, Screen.height * 0.14f),""))
+		                       Screen.width * 0.4f, Screen.height * 0.14f),"")&& seen == true)
 		{
 			//credits
+			buttonClick.Play();
+			credits = true;
+			seen = false;
 			menu.enabled = false;
 			tutorial.enabled = false;
 			tutorialCheck.enabled = false;
+			intro.enabled = false;
+			introCheck.enabled = false;
 			creditsTex.enabled = true;
-			credits = true;
 		}
 		if(GUI.Button(new Rect(Screen.width * 0.28f,
 		                       Screen.height * 0.79f, 
@@ -155,23 +194,36 @@ public class MainMenu : MonoBehaviour {
 	void Update(){
 		if(tutorialBool == true && credits == false)
 		{
-			PlayerPrefs.SetFloat("menuTut",1);
 			tutorialCheck.enabled = true;
 			tutorial.enabled = false;
 		}
 		if(tutorialBool == false && credits == false)
 		{
-			PlayerPrefs.SetFloat("menuTut",0);
 			tutorial.enabled = true;
 			tutorialCheck.enabled = false;
 		}
+		if(introBool == true && credits == false)
+		{
+			introCheck.enabled = true;
+			intro.enabled = false;
+		}
+		if(introBool == false && credits == false)
+		{
+			intro.enabled = true;
+			introCheck.enabled = false;
+		}
+		if(Input.touchCount == 0)
+		{
+			seen = true;
+		}
 		if(credits == true)
 		{
-			if(Input.GetKeyDown(KeyCode.Escape) || Input.touchCount >= 1)
+			if(Input.GetKeyDown(KeyCode.Escape) || Input.touchCount >= 1 && seen == true)
 			{
 				tutorial.enabled = true;
 				creditsTex.enabled = false;
 				menu.enabled = true;
+				seen = false;
 				credits = false;
 			}
 		}

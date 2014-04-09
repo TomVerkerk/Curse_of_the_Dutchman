@@ -508,13 +508,14 @@ Transform:
   m_Children:
   - {fileID: 483972644}
   - {fileID: 586237907}
+  - {fileID: 1236833936}
   - {fileID: 1494799141}
   - {fileID: 185675490}
   - {fileID: 1762342905}
   - {fileID: 619229733}
   - {fileID: 546837544}
   - {fileID: 651635015}
-  - {fileID: 1236833936}
+  - {fileID: 326707317}
   - {fileID: 2002771522}
   - {fileID: 1947715661}
   - {fileID: 1175680805}
@@ -690,10 +691,62 @@ MonoBehaviour:
   dockText4: {fileID: 1703097795}
   dockTradeText1: {fileID: 2002771523}
   dockTradeText2: {fileID: 656053595}
-  dockTradeText3: {fileID: 1236833937}
+  dockTradeText3: {fileID: 326707318}
+  skullText: {fileID: 1236833937}
   level: Level1
   plunderSound: {fileID: 1326293435}
   buttonClick: {fileID: 202601968}
+--- !u!1 &326707316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100086, guid: 0fecfedf01ce93543aebdf71d1263367, type: 2}
+  m_PrefabInternal: {fileID: 1142962008}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 326707317}
+  - 132: {fileID: 326707318}
+  m_Layer: 0
+  m_Name: DockTradeText3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &326707317
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400086, guid: 0fecfedf01ce93543aebdf71d1263367, type: 2}
+  m_PrefabInternal: {fileID: 1142962008}
+  m_GameObject: {fileID: 326707316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: .100000001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 291575704}
+--- !u!132 &326707318
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 13200044, guid: 0fecfedf01ce93543aebdf71d1263367,
+    type: 2}
+  m_PrefabInternal: {fileID: 1142962008}
+  m_GameObject: {fileID: 326707316}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 12800000, guid: 095cfff7b204e0b4d980413251297b82, type: 3}
+  m_Material: {fileID: 0}
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!1 &354589464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,7 +1237,7 @@ GUITexture:
   m_GameObject: {fileID: 619229732}
   m_Enabled: 1
   m_Texture: {fileID: 2800000, guid: 831b55e3e982c7c4c97c9f46e8209898, type: 3}
-  m_Color: {r: .25, g: .235294119, b: .235294119, a: .501960814}
+  m_Color: {r: .617647052, g: .526816607, b: .435986161, a: .411764711}
   m_PixelInset:
     serializedVersion: 2
     x: 0
@@ -2204,7 +2257,7 @@ GameObject:
   - 4: {fileID: 1236833936}
   - 132: {fileID: 1236833937}
   m_Layer: 0
-  m_Name: DockTradeText3
+  m_Name: DockSkullText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2242,7 +2295,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!1 &1246409095

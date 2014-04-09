@@ -1,18 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MainMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CutScene.cs">
     <Files>
-      <File FileName="Assets\Scripts\MainMenu.cs" Line="176" Column="5" />
-      <File FileName="Assets\Scripts\MainMenu.cs" Line="211" Column="1" />
-      <File FileName="Assets\Scripts\CutScene.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DropScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameData.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CutScene.cs" Line="4" Column="40" />
+      <File FileName="Assets\Scripts\SkullColl.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CollisionPush.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="103" Column="20" />
-      <File FileName="Assets\Scripts\DockMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Tutorial.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyHealth.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Battle.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

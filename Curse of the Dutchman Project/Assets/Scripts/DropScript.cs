@@ -5,10 +5,7 @@ public class DropScript : MonoBehaviour {
 
 	public GameData gameData;
 	private float random;
-	public GUIText skullText;
-	public GUITexture messageTex;
-	private bool show = false;
-	
+
 	private GameObject drop1;
 	private GameObject drop2;
 	private GameObject drop3;
@@ -48,16 +45,10 @@ public class DropScript : MonoBehaviour {
 			drop10 = GameObject.FindGameObjectWithTag("drop10");
 			drop11 = GameObject.FindGameObjectWithTag("drop11");
 		}
-		if(PlayerPrefs.GetFloat(this.gameObject.tag) == 1)
+		if(this.gameObject.tag != "enemyDrop" && PlayerPrefs.GetFloat(this.gameObject.tag) == 1)
 		{
 			Destroy(this.gameObject);
 		}
-		skullText.enabled = false;
-		messageTex.enabled = false;
-		skullText.pixelOffset = new Vector2(Screen.width*0.3f,Screen.height*0.6f);
-		skullText.text = "Youve found the skull!";
-		skullText.fontSize = Screen.width/25;
-		messageTex.pixelInset = new Rect(Screen.width*0.2f, Screen.height*0.4f,Screen.width*0.6f,Screen.height*0.3f);
 	}
 
 	void OnTriggerEnter(Collider col){
@@ -68,21 +59,6 @@ public class DropScript : MonoBehaviour {
 			random = Mathf.Round(Random.value*8);
 			gameData.ChangeSupplies(random);
 			PlayerPrefs.SetFloat(this.gameObject.tag,1);
-			if(gameObject.tag == "Skull")
-			{
-				PlayerPrefs.SetFloat("Skull",1);
-				skullText.enabled = true;
-				messageTex.enabled = true;
-				show = true;
-			}
-		}
-	}
-	void Update(){
-		if(show = true && Input.touchCount >= 1)
-		{
-			skullText.enabled = false;
-			messageTex.enabled = false;
-			show = false;
 		}
 	}
 }

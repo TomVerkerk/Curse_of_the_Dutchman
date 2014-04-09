@@ -23,10 +23,14 @@ public class DockMenu : MonoBehaviour {
 	public GUIText dockTradeText1;
 	public GUIText dockTradeText2;
 	public GUIText dockTradeText3;
+	public GUIText skullText;
 	public string level;
 	public AudioSource plunderSound;
 	public AudioSource buttonClick;
 
+	private bool seen = false;
+	private float plundered;
+	private bool read = false;
 	private float pirates;
 	private float ammo;
 	private float pos = 1;
@@ -45,6 +49,7 @@ public class DockMenu : MonoBehaviour {
 		dockTradeText1.enabled = false;
 		dockTradeText2.enabled = false;
 		dockTradeText3.enabled = false;
+		skullText.enabled = false;
 		ammoSuppl1.enabled = false;
 		ammoSuppl2.enabled = false;
 		supplAmmo.enabled = false;
@@ -56,9 +61,9 @@ public class DockMenu : MonoBehaviour {
 		statsUI.enabled = false;
 		dockSupplies.enabled = true;
 		dockAmmo.enabled = true;
-		PlayerPrefs.SetFloat("supplied",0);
-		PlayerPrefs.SetString("level", "dock");
 		dockTut = PlayerPrefs.GetFloat("dockTut");
+		level = PlayerPrefs.GetString("level");
+		plundered = PlayerPrefs.GetFloat("supplied"+level);
 		PlayerPrefs.SetFloat("docked" , 1);
 		PlayerPrefs.SetFloat("sails", 0);
 		PlayerPrefs.SetFloat("movementSpeed", 0);
@@ -77,6 +82,7 @@ public class DockMenu : MonoBehaviour {
 		dockText2.text = "Here you can trade your supplies for ammo.\nAnd your ammo for new supplies.";
 		dockText3.text = "You can also plunder the harbour for supplies,\nThis may cost one of your pirates.";
 		dockText4.text = "Youve plundered the harbour.";
+		skullText.text = "I've heared the skull was near here...";
 		dockTradeText1.text = " 1 Ammo\n   for\n10 Supplies";
 		dockTradeText2.text = " 10 Ammo\n   for\n100 Supplies";
 		dockTradeText3.text = "10 Supplies\n   for\n 1 Ammo";
@@ -84,6 +90,7 @@ public class DockMenu : MonoBehaviour {
 		dockText2.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.62f);
 		dockText3.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.62f);
 		dockText4.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.6f);
+		skullText.pixelOffset = new Vector2(Screen.width*0.25f,Screen.height*0.6f);
 		dockSupplies.pixelOffset = new Vector2(Screen.width*0.1f,Screen.height*0.3f);
 		dockAmmo.pixelOffset = new Vector2(Screen.width*0.3f,Screen.height*0.3f);
 		dockTradeText1.pixelOffset = new Vector2(Screen.width*0.09f,Screen.height*0.58f);
@@ -93,11 +100,25 @@ public class DockMenu : MonoBehaviour {
 		dockText2.fontSize = Screen.width/32;
 		dockText3.fontSize = Screen.width/32;
 		dockText4.fontSize = Screen.width/21;
+		skullText.fontSize = Screen.width/30;
 		dockSupplies.fontSize = Screen.width/30;
 		dockAmmo.fontSize = Screen.width/30;
 		dockTradeText1.fontSize = Screen.width/30;
 		dockTradeText2.fontSize = Screen.width/30;
 		dockTradeText3.fontSize = Screen.width/30;
+		if(PlayerPrefs.GetFloat("skullLevel") == 1)
+		{
+			skullText.enabled = true;
+			dockMessageTex.enabled = true;
+			read = true;
+			PlayerPrefs.SetFloat("skullLevel",0);
+		}
+		if(plundered == 1)
+		{
+			supplyTex.color = tradeTex.color*0.7f;
+			tradeTex.color = tradeTex.color*0.7f;
+			supplied = true;
+		}
 	}
 
 	// Update is called once per frame
@@ -106,6 +127,11 @@ public class DockMenu : MonoBehaviour {
 		ammo = PlayerPrefs.GetFloat("ammo");
 		dockSupplies.text = "Supplies: "+supplies.ToString();
 		dockAmmo.text = "Ammo: "+ammo.ToString();
+		if(read == true && Input.touchCount >= 1)
+		{
+			skullText.enabled = false;
+			dockMessageTex.enabled = false;
+		}
 		if(back == true)
 		{
 			fadeSpeed = 0.5f;
@@ -148,7 +174,11 @@ public class DockMenu : MonoBehaviour {
 				dockTut = 0;
 			}
 		}
-		if(supplied == true && Input.touchCount >= 1)
+		if(supplied == true && Input.touchCount == 0)
+		{
+			seen = true;
+		}
+		if(supplied == true && seen == true && Input.touchCount >= 1)
 		{
 			dockText4.enabled = false;
 			dockMessageTex.enabled = false;
@@ -166,7 +196,7 @@ public class DockMenu : MonoBehaviour {
 				PlayerPrefs.SetFloat("supplies", supplies);
 				back = true;
 			}
-			if(GUI.Button(new Rect(Screen.width*0.65f,Screen.height*0.05f,Screen.width*0.3f,Screen.height*0.15f),"") && supplied == false)
+			if(GUI.Button(new Rect(Screen.width*0.65f,Screen.height*0.05f,Screen.width*0.3f,Screen.height*0.15f),"") && trade == false && supplied == false)
 			{
 				//trade
 				buttonClick.Play();
@@ -194,7 +224,7 @@ public class DockMenu : MonoBehaviour {
 				{
 					PlayerPrefs.SetFloat("pirates", pirates-1);
 				}
-				PlayerPrefs.SetFloat("supplied",1);
+				PlayerPrefs.SetFloat("supplied"+level,1);
 				PlayerPrefs.SetFloat("pirates", pirates);
 				PlayerPrefs.SetFloat("supplies",supplies);
 				supplied = true;

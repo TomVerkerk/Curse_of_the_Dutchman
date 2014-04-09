@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour {
 	public GameObject smoke;
 	public GameObject Drop;
 
+	private bool drop = false;
 	private bool _drop = false;
 	// Use this for initialization
 	void Start () {
@@ -50,9 +51,10 @@ public class EnemyHealth : MonoBehaviour {
 		if (enemyHealth <= 0)
 		{
 			transform.Translate(Vector3.down* sinkSpeed * Time.deltaTime);
-			if(Drop.transform.position != transform.position && _drop == false){
-				_drop = true;
+			if(drop == false)
+			{
 				Drop.transform.position = new Vector3(transform.position.x,transform.position.y +1, transform.position.z);
+				drop = true;
 			}
 		}
 	}

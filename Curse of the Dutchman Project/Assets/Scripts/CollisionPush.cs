@@ -66,21 +66,23 @@ public class CollisionPush : MonoBehaviour {
 				transform.position = new Vector3 (transform.position.x - 1, transform.position.y, transform.position.z + 2);
 			}
 		}
+	}
+
+	void OnTriggerEnter(Collider col)
+	{
 		if (col.gameObject.tag == "endTrigger" && PlayerPrefs.GetFloat("skull") == 1)
 		{
+			Debug.Log("1");
 			PlayerPrefs.SetFloat("win",1);
 			player.FadeOut("Menu");
 		}
 		if (col.gameObject.tag == "endTrigger" && PlayerPrefs.GetFloat("skull") == 0)
 		{
+			Debug.Log("2");
 			noSkull = true;
 			gameData.noSkullText.enabled = true;
 			gameData.noSkullMessageTex.enabled = true;
 		}
-	}
-
-	void OnTriggerEnter(Collider col)
-	{
 		if(col.gameObject.tag == "enemyBullet")
 		{
 			enemyDamage = 5 + Mathf.Round(Random.value*20);

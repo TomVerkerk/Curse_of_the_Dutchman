@@ -96,15 +96,23 @@ public class GameData : MonoBehaviour {
 		if (_dead == true && Input.touchCount >= 1) {
 			Application.LoadLevel("Menu");
 		}
-		if(supplies <= 0)
+		if(supplies <= 10)
 		{
-			supplies = 0;
+			boatSuppliesText.color = Color.red;
+			if(supplies <= 0)
+			{
+				supplies = 0;
+			}
+		}
+		else
+		{
+			boatSuppliesText.color = Color.black;
 		}
 		if(pirates <= 0)
 		{
 			pirates = 0;
 			PlayerPrefs.SetFloat("died",1);
-			noSkullText.enabled = true;
+			noSkullMessageTex.enabled = true;
 			gameOverText.enabled = true;
 			_dead = true;
 		}

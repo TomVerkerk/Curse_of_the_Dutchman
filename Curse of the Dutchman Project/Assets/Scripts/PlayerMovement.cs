@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
 	public GameObject sailFront2;
 	public GameObject sailBack1;
 	public GameObject sailBack2;
+	public ParticleSystem particle;
 	public AudioSource dockSound;
 	public AudioSource ambientSound;
 
@@ -89,7 +90,7 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			spawnRotation = Vector3.back;
 		}
-		if(PlayerPrefs.GetFloat("enteringLevel") == 1 && PlayerPrefs.GetString("level") == "level1")
+		if(PlayerPrefs.GetFloat("enteringLevel") == 1 && PlayerPrefs.GetString("level") == "Level1")
 		{
 			spawnRotation = Vector3.left;
 			PlayerPrefs.SetFloat("enteringLevel",0);
@@ -116,6 +117,7 @@ public class PlayerMovement : MonoBehaviour {
 		if(PlayerPrefs.GetString("level") == "Level4")
 		{
 			enemy3 = GameObject.FindWithTag("enemy3").GetComponent<EnemyHealth>();
+			PlayerPrefs.SetFloat("skullLevel",1);
 		}
 		if(PlayerPrefs.GetString("level") == "Level5")
 		{
@@ -135,6 +137,10 @@ public class PlayerMovement : MonoBehaviour {
 				sailBack2.SetActive(false);
 				sailFront1.SetActive(false);
 				sailFront2.SetActive(false);
+				if(particle.isPlaying)
+				{
+					particle.Stop();
+				}
 			}
 			else if(sails == 1)
 			{
@@ -142,6 +148,10 @@ public class PlayerMovement : MonoBehaviour {
 				sailFront2.SetActive(true);
 				sailBack1.SetActive(false);
 				sailBack2.SetActive(false);
+				if(!particle.isPlaying)
+				{
+					particle.Play();
+				}
 			}
 			else
 			{
@@ -149,6 +159,10 @@ public class PlayerMovement : MonoBehaviour {
 				sailFront2.SetActive(true);
 				sailBack1.SetActive(true);
 				sailBack2.SetActive(true);
+				if(!particle.isPlaying)
+				{
+					particle.Play();
+				}
 			}
 			if(tutorial.pos > 0)
 			{
@@ -255,7 +269,7 @@ public class PlayerMovement : MonoBehaviour {
 			}
 			if(!docking)
 			{
-				if (!ambientSound.isPlaying)
+				if (!ambientSound.isPlaying && PlayerPrefs.GetFloat("intro")==0)
 				{
 					ambientSound.Play();
 				}
@@ -437,6 +451,7 @@ public class PlayerMovement : MonoBehaviour {
 			dock = trigger;
 			leftDock = dock.gameObject.GetComponent<DockBehaviour>().leftDock;
 			rightDock = dock.gameObject.GetComponent<DockBehaviour>().rightDock;
+			PlayerPrefs.SetString("level", trigger.gameObject.GetComponent<DockBehaviour>().level);
 			nearDock = true;
 			rotated = dock.gameObject.GetComponent<DockBehaviour>().dockRotation;
 			PlayerPrefs.SetFloat("dockRotation", dock.gameObject.GetComponent<DockBehaviour>().dockRotation);

@@ -10,6 +10,7 @@ public class DockBehaviour : MonoBehaviour {
 	public GameObject actionCamLeft;
 	public GameObject actionCamRight;
 	public float dockRotation;
+	public string level;
 	// 1= normal 2= rotated
 
 
